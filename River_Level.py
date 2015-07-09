@@ -110,7 +110,7 @@ else:
 
 '''Emailer'''
 
-addresses = ['delponte.domi@gmail.com','cbazodi@gmail.com', 'nicole.f.quinn@gmail.com']
+addresses = ['###','@@@@', '!!!!']
 
 
 if rc_depth_float > 4 or gr_depth_float > 7: 
@@ -122,7 +122,7 @@ if rc_depth_float > 4 or gr_depth_float > 7:
 	mimetext = MIMEText(TEXT, 'html')
 	msg.attach(mimetext)
 	username = 'RedCedarFlood@gmail.com'
-	password = 'Eagle523'
+	password = '$$$$$$$$$$$$$$$'
 	server = smtplib.SMTP('smtp.gmail.com:587')
 	server.ehlo()
 	server.starttls()

@@ -52,7 +52,7 @@ sy= Rivers(url_SY)
 
 sy.I_under = sy.floodCheck(3.5,4)
 
-addresses = ['delponte.domi@gmail.com']
+addresses = ['##########']
 
 def send_emails():
 	msg = MIMEMultipart('alternative')
@@ -63,7 +63,7 @@ def send_emails():
 	mimetext = MIMEText(TEXT, 'html')
 	msg.attach(mimetext)
 	username = 'RedCedarFlood@gmail.com'
-	password = 'Eagle523'
+	password = '######'
 	server = smtplib.SMTP('smtp.gmail.com:587')
 	server.ehlo()
 	server.starttls()

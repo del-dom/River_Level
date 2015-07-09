@@ -110,27 +110,35 @@ else:
 
 '''Emailer'''
 
+addresses = ['###','@@@@', '!!!!']
+
+
 if rc_depth_float > 4 or gr_depth_float > 7: 
 	msg = MIMEMultipart('alternative')
 	FROM = 'RedCedarFlood@gmail.com'
-	TO = "delponte.domi@gmail.com" #+ ',' + "cbazodi@gmail.com"
+	TO = '######'
 	msg['From'] = 'RedCedarFlood@gmail.com'
-	msg['To'] = "delponte.domi@gmail.com" #+ ',' + "cbazodi@gmail.com"
 	msg['SUBJECT'] = "FloodAlert" + ' ' + time.strftime("%d/%m/%Y") + ' ' + time.strftime("%I:%M")
 	TEXT = """<html><head></head><body><h3>Flood prediction accuracy may be effected by distance from the gauge.</h3><h2>Red Cedar Locations:</h2><h4> Measurements taken at Farm Lane on MSU campus.</h4><table><tr><th>Location</th><th>Flooded</th><th>Floods At</th><th>Current</th></tr><tr><td><a id="various3">Kalamazoo St Underpass</a></td><td>"""+kal_under+"""</td><td>4 ft</td><td>"""+rc_depth_text+"""</td></tr><tr><td><a id="various4">Railroad Underpass (between Clippert & Aurelius)</a></td><td>"""+RC_Rail_under+"""</td><td>5 ft</td><td>"""+rc_depth_text+"""</td></tr><tr><td><a id="various5">Potter Park near Aurelius</a></td><td>"""+Zoo+"""</td><td>5 ft</td><td>"""+rc_depth_text+"""</td></tr><tr><td>Most Lower Areas</td><td>"""+rc_lowareas+"""</td><td>5.75 ft</td><td>"""+rc_depth_text+"""</td></tr></table><h2>Grand River Locations:</h2><h4> Measurements taken at N Grand River Ave</h4><table><tr><th>Location</th><th>Flooded</th><th>Floods At</th><th>Current</th></tr><tr><td><a id="various6">Railroad Underpass by Island Ave</a></td><td>"""+gr_rail_under+"""</td><td>7 ft</td><td>"""+gr_depth_text+"""</td></tr><tr><td><a  id="various7">Saginaw Underpass</a></td><td>"""+sag_under+"""</td><td>8.5 ft</td><td>"""+gr_depth_text+"""</td></tr><tr><td>Most Lower Areas</td><td>"""+gr_lowareas+"""</td><td>10 ft</td><td>"""+gr_depth_text+"""</td></tr></table><h2>Sycamore Creek Locations:</h2><h4> Measurements taken at Holt Rd</h4><table><tr><th>Location</th><th>Flooded</th><th>Floods At</th><th>Current</th></tr><tr><td><a   id="various8">I-96 Underpass</a></td><td>"""+I_under+"""</td><td>3.5 ft</td><td>"""+SC_depth_text+"""</td></tr></table></body></html>"""
 	mimetext = MIMEText(TEXT, 'html')
 	msg.attach(mimetext)
 	username = 'RedCedarFlood@gmail.com'
-	password = 'Eagle523'
-
+	password = '$$$$$$$$$$$$$$$'
 	server = smtplib.SMTP('smtp.gmail.com:587')
 	server.ehlo()
 	server.starttls()
 	server.login(username,password)
-	server.sendmail(FROM, TO, msg.as_string())
+
+	for i in range(len(addresses)):
+		#print len(addresses)
+		#print addresses[i]
+		TO = addresses[i]
+		msg['To'] = addresses[i]
+		server.sendmail(FROM, TO, msg.as_string())
+		
 	server.quit()
+
 	print 'E-mail sent'
 else:
 	print 'No flooding'
-
 

@@ -109,7 +109,10 @@ else:
 	I_under = 'Clear'
 
 '''Emailer'''
+
 addresses = ['delponte.domi@gmail.com','cbazodi@gmail.com', 'nicole.f.quinn@gmail.com']
+
+
 if rc_depth_float > 4 or gr_depth_float > 7: 
 	msg = MIMEMultipart('alternative')
 	FROM = 'RedCedarFlood@gmail.com'
@@ -120,17 +123,19 @@ if rc_depth_float > 4 or gr_depth_float > 7:
 	msg.attach(mimetext)
 	username = 'RedCedarFlood@gmail.com'
 	password = 'Eagle523'
+	server = smtplib.SMTP('smtp.gmail.com:587')
+	server.ehlo()
+	server.starttls()
+	server.login(username,password)
+
 	for i in range(len(addresses)):
 		#print len(addresses)
 		#print addresses[i]
 		TO = addresses[i]
 		msg['To'] = addresses[i]
-		server = smtplib.SMTP('smtp.gmail.com:587')
-		server.ehlo()
-		server.starttls()
-		server.login(username,password)
 		server.sendmail(FROM, TO, msg.as_string())
-		server.quit()
+		
+	server.quit()
 	print 'e-mail sent'
 else:
 	'No flooding'

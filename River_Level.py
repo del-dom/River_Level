@@ -110,20 +110,19 @@ else:
 
 '''Emailer'''
 
-addresses = ['###','@@@@', '!!!!']
+addresses = ['delponte.domi@gmail.com']
 
 
 if rc_depth_float > 4 or gr_depth_float > 7: 
 	msg = MIMEMultipart('alternative')
 	FROM = 'RedCedarFlood@gmail.com'
-	TO = '######'
 	msg['From'] = 'RedCedarFlood@gmail.com'
 	msg['SUBJECT'] = "FloodAlert" + ' ' + time.strftime("%d/%m/%Y") + ' ' + time.strftime("%I:%M")
-	TEXT = """<html><head></head><body><h3>Flood prediction accuracy may be effected by distance from the gauge.</h3><h2>Red Cedar Locations:</h2><h4> Measurements taken at Farm Lane on MSU campus.</h4><table><tr><th>Location</th><th>Flooded</th><th>Floods At</th><th>Current</th></tr><tr><td><a id="various3">Kalamazoo St Underpass</a></td><td>"""+kal_under+"""</td><td>4 ft</td><td>"""+rc_depth_text+"""</td></tr><tr><td><a id="various4">Railroad Underpass (between Clippert & Aurelius)</a></td><td>"""+RC_Rail_under+"""</td><td>5 ft</td><td>"""+rc_depth_text+"""</td></tr><tr><td><a id="various5">Potter Park near Aurelius</a></td><td>"""+Zoo+"""</td><td>5 ft</td><td>"""+rc_depth_text+"""</td></tr><tr><td>Most Lower Areas</td><td>"""+rc_lowareas+"""</td><td>5.75 ft</td><td>"""+rc_depth_text+"""</td></tr></table><h2>Grand River Locations:</h2><h4> Measurements taken at N Grand River Ave</h4><table><tr><th>Location</th><th>Flooded</th><th>Floods At</th><th>Current</th></tr><tr><td><a id="various6">Railroad Underpass by Island Ave</a></td><td>"""+gr_rail_under+"""</td><td>7 ft</td><td>"""+gr_depth_text+"""</td></tr><tr><td><a  id="various7">Saginaw Underpass</a></td><td>"""+sag_under+"""</td><td>8.5 ft</td><td>"""+gr_depth_text+"""</td></tr><tr><td>Most Lower Areas</td><td>"""+gr_lowareas+"""</td><td>10 ft</td><td>"""+gr_depth_text+"""</td></tr></table><h2>Sycamore Creek Locations:</h2><h4> Measurements taken at Holt Rd</h4><table><tr><th>Location</th><th>Flooded</th><th>Floods At</th><th>Current</th></tr><tr><td><a   id="various8">I-96 Underpass</a></td><td>"""+I_under+"""</td><td>3.5 ft</td><td>"""+SC_depth_text+"""</td></tr></table></body></html>"""
+	TEXT = """<html><head></head><body><h3>Flood prediction accuracy may be effected by distance from the gauge.</h3><h2>Red Cedar Locations:</h2><h4> Measurements taken at Farm Lane on MSU campus.</h4><table><tr><th>Location</th><th>Flooded</th><th>Floods At</th><th>Current</th></tr><tr><td><a href="http://lansingrivertrail.org/map-1.php?lat=42.729283&lon=-84.506378" id="various3">Kalamazoo St Underpass</a></td><td>"""+kal_under+"""</td><td>4 ft</td><td>"""+rc_depth_text+"""</td></tr><tr><td><a href="http://lansingrivertrail.org/map-1.php?lat=42.722711&lon=-84.516352" id="various4">Railroad Underpass (between Clippert & Aurelius)</a></td><td>"""+RC_Rail_under+"""</td><td>5 ft</td><td>"""+rc_depth_text+"""</td></tr><tr><td><a href="http://lansingrivertrail.org/map-1.php?lat=42.716246&lon=-84.524855" id="various5">Potter Park near Aurelius</a></td><td>"""+Zoo+"""</td><td>5 ft</td><td>"""+rc_depth_text+"""</td></tr><tr><td>Most Lower Areas</td><td>"""+rc_lowareas+"""</td><td>5.75 ft</td><td>"""+rc_depth_text+"""</td></tr></table><h2>Grand River Locations:</h2><h4> Measurements taken at N Grand River Ave</h4><table><tr><th>Location</th><th>Flooded</th><th>Floods At</th><th>Current</th></tr><tr><td><a href="http://lansingrivertrail.org/map-1.php?lat=42.719010&lon=-84.554509" id="various6">Railroad Underpass by Island Ave</a></td><td>"""+gr_rail_under+"""</td><td>7 ft</td><td>"""+gr_depth_text+"""</td></tr><tr><td><a  href="http://lansingrivertrail.org/map-1.php?lat=42.740819&lon=-84.548959" id="various7">Saginaw Underpass</a></td><td>"""+sag_under+"""</td><td>8.5 ft</td><td>"""+gr_depth_text+"""</td></tr><tr><td>Most Lower Areas</td><td>"""+gr_lowareas+"""</td><td>10 ft</td><td>"""+gr_depth_text+"""</td></tr></table><h2>Sycamore Creek Locations:</h2><h4> Measurements taken at Holt Rd</h4><table><tr><th>Location</th><th>Flooded</th><th>Floods At</th><th>Current</th></tr><tr><td><a href="http://lansingrivertrail.org/map-1.php?lat=42.668133&lon=-84.511688" id="various8">I-96 Underpass</a></td><td>"""+I_under+"""</td><td>3.5 ft</td><td>"""+SC_depth_text+"""</td></tr></table></body></html>"""
 	mimetext = MIMEText(TEXT, 'html')
 	msg.attach(mimetext)
 	username = 'RedCedarFlood@gmail.com'
-	password = '$$$$$$$$$$$$$$$'
+	password = 'Eagle523'
 	server = smtplib.SMTP('smtp.gmail.com:587')
 	server.ehlo()
 	server.starttls()

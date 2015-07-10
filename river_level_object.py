@@ -95,7 +95,7 @@ sy.I_under = sy.floodCheck(sy.FLOOD_VALS['I_under']['partial'],sy.FLOOD_VALS['I_
 #print sy.I_under
 
 
-addresses = ['delponte.domi@gmail.com']
+addresses = ['delponte.domi@gmail.com','cbazodi@gmail.com','nicole.f.quinn@gmail.com']
 
 def send_emails():
 	msg = MIMEMultipart('alternative')

@@ -19,40 +19,83 @@ class Rivers():
 		for index in self.most_recent:
 			for text in index:
 				for a in text:
-					self.measurements = self.measurements + a 
+					self.measurements += a 
 		self.date_time = str(self.measurements[0:11])
 		self.depth_text = str(self.measurements[11:])
 		self.depth_float = float(self.depth_text.rstrip(' ft'))
 
-	def floodCheck(self,partFlood,fullFlood):
-		flooded = ''
-		if self.depth_float > partFlood:
-			if self.depth_float > fullFlood:
-				flooded = 'Flooded'
-			else: flooded = 'Partially Flooded'
-		else:
-			flooded = 'Clear'
-		return flooded
-
+	def floodCheck(self,partial=None,full=None):
+		if self.depth_float > partial:
+			if self.depth_float > full:
+				return 'Flooded'
+			return 'Partially Flooded'
+		return 'Clear'
 
 rc = Rivers(url_RC)
+rc.FLOOD_VALS = {
+    'kal_under': {
+        'partial': 4,
+        'full': 4.5,
+    },
+    'rail_under': {
+        'partial': 5,
+        'full': 5.5,
+    },
+    'zoo': {
+        'partial': 5,
+        'full': 5.5,
+    },
+    'low_areas': {
+        'partial': 5.75,
+        'full': 6.25,
+    }   
+}
 
-rc.kal_under = rc.floodCheck(4,4.5)
-rc.rail_under = rc.floodCheck(5,5.5)
-rc.zoo = rc.floodCheck(5,5.5)
-rc.low_areas = rc.floodCheck(5.75,6.25)
+rc.kal_under = rc.floodCheck(rc.FLOOD_VALS['kal_under']['partial'],rc.FLOOD_VALS['kal_under']['full'])
+rc.rail_under = rc.floodCheck(rc.FLOOD_VALS['rail_under']['partial'],rc.FLOOD_VALS['rail_under']['full'])
+rc.zoo = rc.floodCheck(rc.FLOOD_VALS['zoo']['partial'],rc.FLOOD_VALS['zoo']['full'])
+rc.low_areas = rc.floodCheck(rc.FLOOD_VALS['low_areas']['partial'],rc.FLOOD_VALS['low_areas']['full'])
 
-gr= Rivers(url_GR)
+gr = Rivers(url_GR)
+gr.FLOOD_VALS = {
+    'sag_under': {
+        'partial': 8.5,
+        'full': 9,
+    },
+    'rail_under': {
+        'partial': 7,
+        'full': 7.5,
+    },
+    'low_areas': {
+        'partial': 10,
+        'full': 10.5,
+    },
+    'low_areas': {
+        'partial': 10,
+        'full': 10.5,
+    }   
+}
 
-gr.rail_under = gr.floodCheck(7,7.5)
-gr.sag_under = gr.floodCheck(8.5,9)
-gr.low_areas = gr.floodCheck(10,10.5)
 
-sy= Rivers(url_SY)
+gr.sag_under = gr.floodCheck(gr.FLOOD_VALS['sag_under']['partial'],gr.FLOOD_VALS['sag_under']['full'])
+#print gr.sag_under
+gr.rail_under = gr.floodCheck(gr.FLOOD_VALS['rail_under']['partial'],gr.FLOOD_VALS['rail_under']['full'])
+#print gr.rail_under
+gr.low_areas = gr.floodCheck(gr.FLOOD_VALS['low_areas']['partial'],gr.FLOOD_VALS['low_areas']['full'])
+#print gr.low_areas
 
-sy.I_under = sy.floodCheck(3.5,4)
+sy = Rivers(url_SY)
+sy.FLOOD_VALS = {
+    'I_under': {
+        'partial': 3.5,
+        'full': 4,
+    }}
 
-addresses = ['##########']
+sy.I_under = sy.floodCheck(sy.FLOOD_VALS['I_under']['partial'],sy.FLOOD_VALS['I_under']['full'])
+#print sy.I_under
+
+
+addresses = ['$$$$$$$$']
 
 def send_emails():
 	msg = MIMEMultipart('alternative')
@@ -63,18 +106,15 @@ def send_emails():
 	mimetext = MIMEText(TEXT, 'html')
 	msg.attach(mimetext)
 	username = 'RedCedarFlood@gmail.com'
-	password = '######'
+	password = '#######'
 	server = smtplib.SMTP('smtp.gmail.com:587')
 	server.ehlo()
 	server.starttls()
 	server.login(username,password)
 
-	for i in range(len(addresses)):
-		#print len(addresses)
-		#print addresses[i]
-		TO = addresses[i]
-		msg['To'] = addresses[i]
-		server.sendmail(FROM, TO, msg.as_string())
+	for address in addresses:
+		msg['To'] = address
+		server.sendmail(FROM, address, msg.as_string())
 	server.quit()
 
 
@@ -83,11 +123,3 @@ if rc.depth_float > 4 or gr.depth_float > 7:
 	print 'E-mail sent'
 else:
 	print 'No flooding'
-
-
-'''
-print 'red cedar' + rc.date_time,rc.depth_text, rc.kal_under,rc.rail_under,rc.zoo,rc.low_areas
-print 'grand river' + gr.rail_under,gr.sag_under,gr.low_areas
-print 'sycamore' + sy.I_under
-print 'grand river' +gr.date_time,gr.depth_text
-print 'sycamore' + sy.date_time,sy.depth_text'''

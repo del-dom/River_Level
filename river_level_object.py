@@ -95,7 +95,7 @@ sy.I_under = sy.floodCheck(sy.FLOOD_VALS['I_under']['partial'],sy.FLOOD_VALS['I_
 #print sy.I_under
 
 
-addresses = ['$$$$$$$$']
+addresses = ['delponte.domi@gmail.com']
 
 def send_emails():
 	msg = MIMEMultipart('alternative')
@@ -106,7 +106,7 @@ def send_emails():
 	mimetext = MIMEText(TEXT, 'html')
 	msg.attach(mimetext)
 	username = 'RedCedarFlood@gmail.com'
-	password = '#######'
+	password = 'Eagle523'
 	server = smtplib.SMTP('smtp.gmail.com:587')
 	server.ehlo()
 	server.starttls()

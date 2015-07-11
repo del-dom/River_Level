@@ -2,6 +2,7 @@ import BeautifulSoup as bs
 import requests
 import smtplib
 import time
+import saved_level
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -94,9 +95,11 @@ sy.FLOOD_VALS = {
 sy.I_under = sy.floodCheck(sy.FLOOD_VALS['I_under']['partial'],sy.FLOOD_VALS['I_under']['full'])
 #print sy.I_under
 
+saved_array = [rc.kal_under,rc.rail_under,rc.zoo,rc.low_areas,gr.sag_under,gr.rail_under,gr.low_areas,sy.I_under]
+addresses = ['delponte.domi@gmail.com', 'cbazodi@gmail.com', 'nicole.f.quinn@gmail.com']
 
-addresses = ['delponte.domi@gmail.com','cbazodi@gmail.com','nicole.f.quinn@gmail.com']
 
+	
 def send_emails():
 	msg = MIMEMultipart('alternative')
 	FROM = 'RedCedarFlood@gmail.com'
@@ -117,9 +120,30 @@ def send_emails():
 		server.sendmail(FROM, address, msg.as_string())
 	server.quit()
 
+def fileWriter():
+	with  open('saved_level.py', 'w') as save_file:
+		save_file.write('saved_array = ')
+		save_file.write('[')
+		for i in range(len(saved_array)):
+			if i < len(saved_array) -1:
+				save_file.write("'" + saved_array[i] + "',")
+			else:
+				save_file.write("'" + saved_array[i] + "'")			
+				save_file.write(']')
+
 
 if rc.depth_float > 4 or gr.depth_float > 7:
-	send_emails()
-	print 'E-mail sent'
+	if int(time.strftime("%I")) == 4:
+		if saved_array == saved_level.saved_array:
+			fileWriter()			
+			print 'No E-mail sent'
+		else:
+			fileWriter()
+			send_emails()
+			print 'E-mail sent'
+	else:
+		send_emails()
+		print 'E-mail sent'
 else:
-	print 'No flooding'
+	fileWriter()
+	print 'No E-mail sent'

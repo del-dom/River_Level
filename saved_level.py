@@ -1,0 +1,1 @@
+saved_array = ['Clear','Clear','Clear','Clear','Clear','Clear','Clear','Flooded']
